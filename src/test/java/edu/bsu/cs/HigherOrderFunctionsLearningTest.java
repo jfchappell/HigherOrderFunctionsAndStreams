@@ -172,15 +172,10 @@ public class HigherOrderFunctionsLearningTest {
     @Test
     public void testDetermineMostActiveMonth() {
         Stream<Revision> input = getRevisions("soup30.json");
-        //Group by month and count
         Month actual = input.collect(Collectors.groupingBy(x -> LocalDate.ofInstant(x.timestamp, ZoneOffset.UTC).getMonth(), Collectors.counting()))
-                //Stream the map
                 .entrySet().stream()
-                //Sort the map in reverse order
                 .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-                //Get the first item from the sorted map
                 .collect(Collectors.toList()).get(0)
-                //Grab the month
                 .getKey();
         Month expected = Month.FEBRUARY;
         Assertions.assertEquals(expected, actual);
